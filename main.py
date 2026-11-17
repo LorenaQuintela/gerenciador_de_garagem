@@ -1,5 +1,6 @@
 # Crud de carros -> Gerenciador de Garagem que permita cadastrar, listar, editar, deletar e sair.
 import json
+from tabulate import tabulate
 
 def ler_carros_arquivo():
   try:
@@ -73,7 +74,7 @@ def cadastrar_carro():
   salvar_carro()
   print("\nCarro cadastrado com sucesso!")
 
-def listar_carros():
+def exibir_carros_lista():
   if len(carros) == 0:
     print("\nNenhum carro cadastrado.")
     return
@@ -84,6 +85,15 @@ def listar_carros():
     print(f"Placa: {carro["placa"]} | Modelo: {carro["modelo"]} | Cor: {carro["cor"]} | Ano: {carro["ano"]}")
 
   print(63*"-")
+def exibir_carros_tabelas():
+  if len(carros) ==0:
+    print("\nNenhum carro cadastrado.")
+    return
+
+  print("------------ Tabela de Carros ------------")
+
+  tabela = tabulate(carros, headers="keys", tablefmt="fancy_grid")
+  print(tabela)
 
 def editar_carro():
   placa = input("Digite a placa do carro que deseja atualizar: ").strip()
@@ -154,10 +164,11 @@ def deletar_carro():
 def exibir_menu():
   print("\n--- GERENCIADOR DE GARAGEM ---\n")
   print("1 - Cadastrar um carro")
-  print("2 - Listar os carros existentes.")
-  print("3 - Editar um carro")
-  print("4 - Deletar um carro")
-  print("5 - Sair")
+  print("2 - Exibir os carros existentes(lista).")
+  print("3 - Exibir os carros existentes(tabela).")
+  print("4 - Editar um carro")
+  print("5 - Deletar um carro")
+  print("6 - Sair")
 
 while True:
   exibir_menu()
@@ -167,12 +178,14 @@ while True:
   if opcao == "1":
     cadastrar_carro()
   elif opcao == "2":
-    listar_carros()
+    exibir_carros_lista()
   elif opcao == "3":
-    editar_carro()
+    exibir_carros_tabelas()
   elif opcao == "4":
-    deletar_carro()
+    editar_carro()
   elif opcao == "5":
+    deletar_carro()
+  elif opcao == "6":
     print("\nEncerrando o Gerenciador de Garagem! Até mais.")
     break
   else:
